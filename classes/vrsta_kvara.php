@@ -1,0 +1,48 @@
+<?php
+include "interfaces/default.php";
+
+class VrstaKvara implements iDefault{
+  // Properties
+  public $id;
+  public $naziv;
+  public $conn;
+
+  // Methods
+  function __construct($conn) {
+    $this->conn = $conn;
+  }
+  function select(){
+  $sql = "SELECT id,naziv FROM mgc_vrsta_kvara";
+  $result = $this->conn->query($sql);  
+  return $result;  
+  }
+  function insert($naziv){
+  $sql = "INSERT INTO mgc_vrsta_kvara (naziv) VALUES ('".$naziv."')";
+
+if ($this->conn->query($sql) === TRUE) {
+  echo "Podatak uspesno unet";
+} else {
+  echo "Greska: " . $sql . "<br>" . $this->conn->error;
+}
+  }
+  function update($naziv,$id){
+  $sql = "UPDATE mgc_vrsta_kvara SET naziv='".$naziv."' WHERE id=".$id;
+
+  if ($this->conn->query($sql) === TRUE) {
+  echo "Podatak uspesno izmenjen";
+} else {
+  echo "Greska: " . $this->conn->error;
+}  
+}
+ function delete($id){
+	$sql = "DELETE FROM mgc_vrsta_kvara WHERE id= ('".$id."')";
+
+if ($this->conn->query($sql) === TRUE) {
+  echo "Podatak uspesno obrisan";
+} else {
+  echo "Error: " . $sql . "<br>" . $this->conn->error;
+}
+ }
+  
+}
+?>
